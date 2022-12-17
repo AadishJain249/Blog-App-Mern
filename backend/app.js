@@ -1,0 +1,11 @@
+const express=require('express')
+const cors=require('cors')
+const app=express()
+app.use(cors());
+const mongoose=require('./db/mongodb')
+const router=require('./router/user-route')
+const router1=require('./router/blog-router')
+app.use(express.json())
+app.use('/api/user',router)
+app.use('/api/blog',router1)
+app.listen(3000)

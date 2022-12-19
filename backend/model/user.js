@@ -19,7 +19,7 @@ const UserSchema=mongoose.Schema({
     },
     blogs:[{ // particular user blogs list 1 per time
         type:mongoose.Types.ObjectId,
-        ref:"blog",// connecting both models
+        ref:'blog',// connecting both models
         required:true        
     }]
 })

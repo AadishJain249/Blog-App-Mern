@@ -4,18 +4,15 @@ const getUser= async(req,res,next)=>{
     let Users;
     try {
          Users=await user.find()
+         
     } catch (error) {
-
+        return console.log(error);
     }
     if(!Users)
     {
-        return res.status(400).send("user doesn't exist");
+        return res.status(400).json({message:"user doesn't exist"});
     }
-
-    else
-    {
-        return res.send({Users}) // this will send list of users 
-    }
+    return res.status(200).json({Users}) // this will send list of users 
 }
 const signup=async(req,res,next)=>{
     const {name,email,password}=req.body

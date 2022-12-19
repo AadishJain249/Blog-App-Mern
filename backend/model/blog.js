@@ -12,9 +12,9 @@ const BlogSchema=mongoose.Schema({
         type:String,
         require:true
     },
-    user:{
-        type:mongoose.Types.ObjectId,
-        ref:"user",// connecting both models
+    author:{ // id
+        type: mongoose.Types.ObjectId,
+        ref:'user',// connecting both models
         required:true        
     }
 })

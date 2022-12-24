@@ -1,10 +1,13 @@
 const express=require('express')
 const cors=require('cors')
 const app=express()
+const cookie=require('cookie-parser')
+app.use(cookie())
 app.use(cors());
 const mongoose=require('./db/mongodb')
 const router=require('./router/user-route')
 const router1=require('./router/blog-router')
+const cookieParser = require('cookie-parser')
 app.use(express.json())
 app.use('/api/user',router)
 app.use('/api/blog',router1)

@@ -6,6 +6,7 @@ import Blogs from "./components/Blogs";
 import AddBlog from "./components/AddBlog"
 import UserBlog from "./components/UserBlog";
 import BlogDetail from "./components/BlogDetail";
+import SignUp from "./components/SignUp";
 function App() {
   return (
     <React.Fragment>
@@ -14,7 +15,9 @@ function App() {
       </header>
       <main>
         <Routes>
-          <Route path="/auth" element={<Login></Login>}></Route>
+          {/* <Route path="/" element={<Header></Header>}></Route> */}
+          <Route path="/login" element={<Login></Login>}></Route>
+          <Route path="/signup" element={<SignUp></SignUp>}></Route>
           <Route path="/blogs" element={<Blogs></Blogs>}></Route>
           <Route path="/myblogs" element={<UserBlog></UserBlog>}></Route>
           <Route path="/myblogs/:id" element={<BlogDetail></BlogDetail>}></Route>

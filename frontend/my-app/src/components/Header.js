@@ -14,9 +14,7 @@ const theme = createTheme({
 function Header() {
   const [value,setvalue]=useState()
   return (
-    
-
-    <AppBar sx={{
+  <AppBar sx={{
         background:
         "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 54%, rgba(0,212,255,1) 100%)"
       }}>
@@ -28,7 +26,7 @@ function Header() {
           <Tabs 
           textColor='white'
           TabIndicatorProps={{style: {fontWeight:900 }}}
-          value={value} onChange={(e,val)=>setvalue(val)}> 
+          value={0} onChange={(e,val)=>setvalue(val)}> 
             <Tab LinkComponent={Link} to="/blogs/add" label="All Blogs"></Tab>
             <Tab LinkComponent={Link} to="/myBlog" label ="My Blogs"></Tab>
           </Tabs>
@@ -38,7 +36,7 @@ function Header() {
         <Button
         varient="contained"
         LinkComponent={Link}
-        to="/auth"
+        to="/signup"
         sx={{ margin: 1, borderRadius: 10 ,fontWeight:900}}
         color="primary"
         >SignUp</Button>
@@ -51,7 +49,7 @@ function Header() {
         >LogOut</Button>
         <Button 
         LinkComponent={Link}
-        to="/auth"
+        to="/login"
         varient="contained"
         sx={{ margin: 1, borderRadius: 10,fontWeight:900 }}
         color="secondary">Login</Button>
@@ -61,5 +59,4 @@ function Header() {
     </AppBar>
   )
 }
-
 export default Header

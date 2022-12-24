@@ -30,7 +30,7 @@ const signup=async(req,res,next)=>{
     }
     if(exist)
     {
-        return res.status(200).json({message: "user already exist"})
+        return res.status(400).json({message: "user already exist"})
     }
     const hash=bcrypt.hashSync(password)
     const users=new user({
@@ -72,7 +72,7 @@ const login=async(req,res,next)=>{
     })
     res.cookie(String(exist._id),token,{
         path:'/',
-        expires:new Date(Date.now()+1000*180),
+        expires:new Date(Date.now()+1000*604800),
         httpOnly:true,
         sameSite:'lax'
     })
@@ -120,6 +120,26 @@ const loginUser = async (req, res, next) => {
     }
     return res.status(200).json({ users });
   };
+  const logout=async(req,res,next)=>{
+    // // const cookies = req.headers.cookie;
+    // // const slice = cookies.split("=")[1];
+    //   if(!slice)
+    //   {
+    //       return res.send({message:"no token"})
+    //   }
+      
+    //   jwt.verify(String(slice),secret,(err,_user)=>{
+    //       if(err)
+    //       {
+    //           return res.send({message:"inavlid token"})
+    //       }
+    //       console.log(`${_user.id}`);
+    //       res.clearCookie(`${_user.id}`)
+    //       req.cookies[`${_user.id}`] = ""; // header se clear karna
+    //       return res.status(200).json({ message: "Successfully Logged Out" });
+    //     })
+    //     next()
+  }
 module.exports={
-    getUser,signup,login,verify,loginUser
+    getUser,signup,login,verify,loginUser,logout
 }

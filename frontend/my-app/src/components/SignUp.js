@@ -23,9 +23,11 @@ const handleChange = (e) => {
       name:inputs.name,
       email:inputs.email,
       password:inputs.password,
-    }).catch((err)=>
-      console.log(err)
-    )
+    }).catch((err) => {
+      // eslint-disable-next-line no-cond-assign
+      if(err.status=404){
+         alert("email already used");
+      }})
     console.log(response);
     const data=await response.data
     return data

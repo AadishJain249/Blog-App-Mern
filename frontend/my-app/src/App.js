@@ -21,14 +21,13 @@ function App() {
           {/* <Route path="/" element={<Header></Header>}></Route> */}
           <Route path="/login" element={<Login></Login>}></Route>
           <Route path="/signup" element={<SignUp></SignUp>}></Route>
-          <Route path="/blogs" element={<Blogs></Blogs>}></Route>
+          <Route path="/blog" element={<Blogs></Blogs>}></Route>
           <Route path="/myblogs" element={<UserBlog></UserBlog>}></Route>
           <Route path="/myblogs/:id" element={<BlogDetail></BlogDetail>}></Route>
           <Route path="/blog/add" element={<AddBlog></AddBlog>}></Route>
         </Routes>
       </main>
     </React.Fragment>
-    
   )
 }
 export default App;

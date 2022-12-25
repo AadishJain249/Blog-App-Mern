@@ -1,8 +1,8 @@
-import React,{useState} from 'react'
+import React from 'react'
 import {Tabs,Typography,Box,AppBar, Toolbar, Button,createTheme,ThemeProvider, Tab} from '@mui/material'
 import {Link} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
-import axios from 'axios'
+// import axios from 'axios'
 import {authActions} from '../store/index'
 const theme = createTheme({
     palette: {
@@ -15,28 +15,23 @@ const theme = createTheme({
     },
   });
 function Header() {
-  const [value,setvalue]=useState()
+  // const [value,setvalue]=useState()
   const dispatch=useDispatch()
   const isLogged=useSelector((state)=>state.isLoggedIn)
-  // const sendReq=async()=>{
+  const sendReq=async()=>{
   // const res=await axios.post('http://localhost:3000/api/user/logout',null,{
+  //   withCredentials:true
   // })
   // if(res.status===200)
   // {
   //   return res
   // }
-  // return new Error("Unable TO Logout. Please try again");
-
-  // }
-  // const res = await axios.get("http://localhost:3000/api/user/logout",null,{});
-  //   if (res.status === 200) {
-  //     return res;
-  //   }
-  //   return new Error("Unable TO Logout. Please try again");
-  // };
-  // const handleLog=()=>{
-  //   sendReq().then(()=>dispatch(authActions.logout()))
-  // }
+  // return new Error("Unable TO Logout. Please try again")
+}
+  
+  const handleLog=()=>{
+    sendReq().then(()=>dispatch(authActions.logout()))
+  }
   return (
   <AppBar sx={{
         background:
@@ -48,11 +43,14 @@ function Header() {
         <Box display="flex" margin="auto">
           {/* tabs is kind of button feature which help in navigating and tab is child of tabs */}
           <Tabs 
+          // textColor='white'
           textColor='white'
           TabIndicatorProps={{style: {fontWeight:900 }}}
-          value={0} onChange={(e,val)=>setvalue(val)}> 
-            <Tab LinkComponent={Link} to="/blogs/add" label="All Blogs"></Tab>
-            <Tab LinkComponent={Link} to="/myBlog" label ="My Blogs"></Tab>
+          value={0} 
+          // onChange={(e,val)=>setvalue(val)}
+          > 
+            <Tab LinkComponent={Link} to="/blog" label="All Blogs"></Tab>
+            <Tab LinkComponent={Link} to="/myblogs" label ="My Blogs"></Tab>
           </Tabs>
         </Box>
         <Box display="flex" marginLeft="auto">
@@ -67,7 +65,7 @@ function Header() {
         >SignUp</Button>
 
         {isLogged &&<Button 
-        // onClick={handleLog}
+        onClick={handleLog}
         LinkComponent={Link}
         to="/"
         varient="contained"

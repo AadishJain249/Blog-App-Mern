@@ -25,7 +25,7 @@ const addBlog=async(req,res,next)=>{
     }
     catch(err)
     {
-        console.log(err);
+        return console.log(err);
     }
     if(!exist)
     {
@@ -37,7 +37,7 @@ const addBlog=async(req,res,next)=>{
     try {
         
         await blogss.save()
-        console.log(exist.blogs);
+        // console.log(exist.blogs);
         exist.blogs.push(blogss._id)
         await exist.save()
         // const session=mongoose.startSession();
@@ -78,7 +78,8 @@ const getbyId=async(req,res,next)=>{
     } catch (error) {
         return console.log(error);
     }
-    return res.status(400).json({blogs})
+    console.log(blogs);
+    return res.status(200).json({blogs})
 }
 const getByUserId=async(req,res,next)=>{
     const userid=req.params.id;

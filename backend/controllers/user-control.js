@@ -121,14 +121,14 @@ const loginUser = async (req, res, next) => {
     return res.status(200).json({ users });
   };
   const logout=async(req,res,next)=>{
-    // // const cookies = req.headers.cookie;
-    // // const slice = cookies.split("=")[1];
+    //   const cookies = req.headers.cookie;
+    //   const slice = cookies.split("=")[1];
     //   if(!slice)
     //   {
     //       return res.send({message:"no token"})
     //   }
-      
-    //   jwt.verify(String(slice),secret,(err,_user)=>{
+    //   jwt.verify(String(slice),secret,(err,_user)=>
+    //   {
     //       if(err)
     //       {
     //           return res.send({message:"inavlid token"})
@@ -137,8 +137,8 @@ const loginUser = async (req, res, next) => {
     //       res.clearCookie(`${_user.id}`)
     //       req.cookies[`${_user.id}`] = ""; // header se clear karna
     //       return res.status(200).json({ message: "Successfully Logged Out" });
-    //     })
-    //     next()
+    //   })
+    //   next()
   }
 module.exports={
     getUser,signup,login,verify,loginUser,logout

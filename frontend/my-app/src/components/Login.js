@@ -17,7 +17,7 @@ const handleChange = (e) => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    console.log(e.target.name,"aadish",e.target.value);
+    // console.log(e.target.name,"aadish",e.target.value);
   };
   const sendRequest=async()=>{
     const response=await axios.post('http://localhost:3000/api/user/login',{
@@ -36,8 +36,9 @@ const handleChange = (e) => {
     e.preventDefault()
     // console.log(inputs);
     sendRequest()
+    .then((data)=>localStorage.setItem("userId",data.user._id))
     .then(() => dispatch(authActions.login()))
-    .then(()=>history('/blogs'))
+    .then(()=>history('/blog'))
   }
   return (
     <form onSubmit={formHandler}>

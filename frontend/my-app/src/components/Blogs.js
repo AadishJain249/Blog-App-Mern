@@ -21,7 +21,7 @@ function Blogs() {
         title={blog.title}
         desc={blog.desc}
         image={blog.image}
-        author={blog.title}
+        author={blog.author.name}
         ></Blog>
       ))}
     </div>

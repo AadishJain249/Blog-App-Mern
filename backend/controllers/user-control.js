@@ -7,8 +7,7 @@ const getUser= async(req,res,next)=>{
     let Users;
     try {
          Users=await user.find()
-         
-    } catch (error) {
+        } catch (error) {
         return console.log(error);
     }
     if(!Users)

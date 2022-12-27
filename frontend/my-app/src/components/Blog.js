@@ -17,8 +17,11 @@ function Blog({title,desc,image,author}) {
           sx={{
           width: "40%",
           margin: "auto",
+          // height:"10",
+          // padding:"30",
+          marginTop:"30%", 
           mt: 2,
-          padding: 2,
+          padding: 5,
           boxShadow: "5px 5px 10px #ccc",
           ":hover": {
             boxShadow: "10px 10px 20px #ccc",
@@ -27,7 +30,10 @@ function Blog({title,desc,image,author}) {
       >
     <CardHeader
       avatar={
-        <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+        <Avatar sx={
+          { bgcolor: red[500],
+           width:"100px", height: 50 }
+          } aria-label="name">
           {author}
         </Avatar>
       }
@@ -53,8 +59,7 @@ function Blog({title,desc,image,author}) {
         <ShareIcon/>
       </IconButton>
     </CardActions>
-
-  </Card>
+    </Card>
     )
 }
 

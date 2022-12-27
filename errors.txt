@@ -1,6 +1,3 @@
- 1.logout
- 2.refresh token alternative
- 3. populate in blog is not working
- 4. userBlog is working but not rendring
- 5. user name print karana author ki id ki jagah
- 
+ 1. logout 
+ 2. Image upload
+ 3. my blogs name not rendring

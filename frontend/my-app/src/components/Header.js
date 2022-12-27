@@ -1,4 +1,4 @@
-import React from 'react'
+import React ,{useState}from 'react'
 import {Tabs,Typography,Box,AppBar, Toolbar, Button,createTheme,ThemeProvider, Tab} from '@mui/material'
 import {Link} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
@@ -15,7 +15,7 @@ const theme = createTheme({
     },
   });
 function Header() {
-  // const [value,setvalue]=useState()
+  const [value,setvalue]=useState()
   const dispatch=useDispatch()
   const isLogged=useSelector((state)=>state.isLoggedIn)
   const sendReq=async()=>{
@@ -46,11 +46,12 @@ function Header() {
           // textColor='white'
           textColor='white'
           TabIndicatorProps={{style: {fontWeight:900 }}}
-          value={0} 
-          // onChange={(e,val)=>setvalue(val)}
+          value={value} 
+          onChange={(e,val)=>setvalue(val)}
           > 
             <Tab LinkComponent={Link} to="/blog" label="All Blogs"></Tab>
             <Tab LinkComponent={Link} to="/myblogs" label ="My Blogs"></Tab>
+            <Tab LinkComponent={Link} to="/blog/add" label="Add Blog"/>
           </Tabs>
         </Box>
         <Box display="flex" marginLeft="auto">

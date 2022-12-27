@@ -4,11 +4,11 @@ import axios from 'axios'
 import Blog from '../components/Blog'
 function UserBlog() {
   const [users, setUser] = useState();
-  // const id = localStorage.getItem("userId");
+  const id = localStorage.getItem("userId");
   // console.log(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const sendRequest=async()=>{
-    const res=await axios.get(`http://localhost:3000/api/blog/63a84d5120b28f430c473036`).catch((err)=>console.log(err))
+    const res=await axios.get(`http://localhost:3000/api/blog/user/${id}`).catch((err)=>console.log(err))
     // console.log(res);
     const data=await res.data
     // console.log(data.blogs);
@@ -17,15 +17,15 @@ function UserBlog() {
   // 
   useEffect(()=>{
     sendRequest().then((data)=>
-    setUser(data.blogs)
+    setUser(data.userblogs.blogs)
     )
-  },[])
-  console.log(users);
+  },[sendRequest])
+  // console.log(users);
   return (
     <div>
       {users &&
-        users.blogs &&
-        users.blogs.map((blog, index) => (
+        users &&
+        users.map((blog, index) => (
           <Blog
             id={blog._id}
             key={index}
@@ -33,7 +33,7 @@ function UserBlog() {
             title={blog.title}
             desc={blog.desc}
             image={blog.image}
-            author={blog.author}
+            author={blog.name}
           />
         ))}
     </div>

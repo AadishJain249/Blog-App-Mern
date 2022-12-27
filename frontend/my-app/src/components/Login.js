@@ -28,7 +28,7 @@ const handleChange = (e) => {
       if(err.status=404){
          alert("User has not logged in");
       }})
-    console.log(response);
+    // console.log(response);
     const data=await response.data
     return data
   }

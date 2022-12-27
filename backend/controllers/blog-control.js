@@ -5,11 +5,11 @@ const {findByIdAndUpdate} = require("../model/user");
 const getBlog=async(req,res,next)=>{
     let blogs;
     try {
-        blogs=await blog.find().populate()
+        blogs=await blog.find().populate('author')
     }
     catch (error) {
        return console.log(error);
-    }
+    }   
     if(!blogs)
     {
         return res.status(200).json({message:"No Blogs Found"});
@@ -35,7 +35,7 @@ const addBlog=async(req,res,next)=>{
         title,desc,image,author
     })
     try {
-        
+
         await blogss.save()
         // console.log(exist.blogs);
         exist.blogs.push(blogss._id)
@@ -85,7 +85,8 @@ const getByUserId=async(req,res,next)=>{
     const userid=req.params.id;
     let userblogs;
     try {
-        userblogs=await user.findById(userid).populate();
+        userblogs=await user.findById(userid)
+        await userblogs.populate('blogs')
     } catch (error) {
         return console.log(error);
     }
@@ -93,13 +94,14 @@ const getByUserId=async(req,res,next)=>{
     {
         return res.status(400).json({message:"No Blog Found"});
     }
-    return res.status(404).json({ message: "No Blog Found" });
+    return res.status(200).json({userblogs});
 }
 const deleteBlog=async(req,res,next)=>{
     const id=req.params.id;
     let blogs
     try {
-        blogs=await blog.findByIdAndRemove(id).populate() // populate tera ref dega user user me bhi details dhundega
+        blogs=await blog.findByIdAndRemove(id)
+        blogs.populate('author') // populate tera ref dega user user me bhi details dhundega
         await blog.user.blogs.pull(blog); // user me se id remove 
         await blog.user.save()
     } catch (error) {

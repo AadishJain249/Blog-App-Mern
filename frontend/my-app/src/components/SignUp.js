@@ -16,7 +16,7 @@ const handleChange = (e) => {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    console.log(e.target.name,"aadish",e.target.value);
+    // console.log(e.target.name,"aadish",e.target.value);
   };
   const sendRequest=async()=>{
     const response=await axios.post('http://localhost:3000/api/user/signup',{
@@ -28,7 +28,7 @@ const handleChange = (e) => {
       if(err.status=404){
          alert("email already used");
       }})
-    console.log(response);
+    // console.log(response);
     const data=await response.data
     return data
   }

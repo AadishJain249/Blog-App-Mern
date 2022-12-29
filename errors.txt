@@ -1,3 +1,2 @@
- 1. logout 
- 2. Image upload
- 3. my blogs name not rendring
+ 1. Logout 
+ 2. Image upload error

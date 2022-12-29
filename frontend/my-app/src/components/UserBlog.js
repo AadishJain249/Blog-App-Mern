@@ -2,6 +2,7 @@ import React from 'react'
 import {useEffect,useState} from 'react'
 import axios from 'axios'
 import Blog from '../components/Blog'
+// import user from '../../../../backend/model/user';
 function UserBlog() {
   const [users, setUser] = useState();
   const id = localStorage.getItem("userId");
@@ -14,18 +15,17 @@ function UserBlog() {
     // console.log(data.blogs);
     return data
   }
-  // 
   useEffect(()=>{
     sendRequest().then((data)=>
-    setUser(data.userblogs.blogs)
+    setUser(data.userblogs)
     )
-  },[sendRequest])
-  // console.log(users);
+  },[])
+  console.log(users);
   return (
     <div>
       {users &&
-        users &&
-        users.map((blog, index) => (
+        users.blogs &&
+        users.blogs.map((blog, index) => (
           <Blog
             id={blog._id}
             key={index}
@@ -33,7 +33,7 @@ function UserBlog() {
             title={blog.title}
             desc={blog.desc}
             image={blog.image}
-            author={blog.name}
+            author={users.name}
           />
         ))}
     </div>

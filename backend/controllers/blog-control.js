@@ -74,19 +74,18 @@ const getbyId=async(req,res,next)=>{
     const id=req.params.id
     let blogs
     try {
-        blogs=await blog.findById(id)
+        blogs=await blog.findById(id).populate('author')
     } catch (error) {
         return console.log(error);
     }
-    console.log(blogs);
+    // console.log(blogs);
     return res.status(200).json({blogs})
 }
 const getByUserId=async(req,res,next)=>{
     const userid=req.params.id;
     let userblogs;
     try {
-        userblogs=await user.findById(userid)
-        await userblogs.populate('blogs')
+        userblogs=await user.findById(userid).populate('blogs')
     } catch (error) {
         return console.log(error);
     }
@@ -94,6 +93,7 @@ const getByUserId=async(req,res,next)=>{
     {
         return res.status(400).json({message:"No Blog Found"});
     }
+    // console.log(userblogs);
     return res.status(200).json({userblogs});
 }
 const deleteBlog=async(req,res,next)=>{

@@ -71,7 +71,7 @@ const login=async(req,res,next)=>{
     })
     res.cookie(String(exist._id),token,{
         path:'/',
-        expires:new Date(Date.now()+1000*604800),
+        expires:new Date(Date.now()+1000*86400),
         httpOnly:true,
         sameSite:'lax'
     })
@@ -120,23 +120,25 @@ const loginUser = async (req, res, next) => {
     return res.status(200).json({ users });
   };
   const logout=async(req,res,next)=>{
-    //   const cookies = req.headers.cookie;
-    //   const slice = cookies.split("=")[1];
-    //   if(!slice)
-    //   {
-    //       return res.send({message:"no token"})
-    //   }
-    //   jwt.verify(String(slice),secret,(err,_user)=>
-    //   {
-    //       if(err)
-    //       {
-    //           return res.send({message:"inavlid token"})
-    //       }
-    //       console.log(`${_user.id}`);
-    //       res.clearCookie(`${_user.id}`)
-    //       req.cookies[`${_user.id}`] = ""; // header se clear karna
-    //       return res.status(200).json({ message: "Successfully Logged Out" });
-    //   })
+      const cookies = req.headers.cookie;
+      const slice = cookies.split("=")[1];
+      if(!slice)
+      {
+          return res.send({message:"no token"})
+      }
+      jwt.verify(String(slice),secret,(err,_user)=>
+      {
+          if(err)
+          {
+              return res.send({message:"inavlid token"})
+          }
+          console.log(`${_user.id}`);
+          console.log(cookies);
+          console.log(slice);
+          res.clearCookie(`${_user.id}`)
+          req.cookies[`${_user.id}`] = ""; // header se clear karna
+          return res.status(200).json({ message: "Successfully Logged Out" });
+      })
     //   next()
   }
 module.exports={

@@ -8,10 +8,37 @@ import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
+import { Box } from '@mui/system';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
-function Blog({title,desc,image,author}) {
- 
+import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import { useNavigate } from "react-router-dom";
+// import {axios} from 'axios'
+import axios from "axios";
+
+function Blog({title,desc,image,author,id,isUser}) {
+  const Navigate=useNavigate()
+  const current = new Date();
+  const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
+  const handleEdit=()=>{
+    Navigate(`/myblogs/${id}`)
+  }
+  const navigate=useNavigate()
+  const deleteRequest=async()=>{
+    const res = await axios
+    .delete(`http://localhost:3000/api/blog/delete/${id}`)
+    .catch((err) => console.log(err));
+    const data = await res.data;
+    // console.log(data);
+    return data;
+  }
+  const handleDelete=()=>{
+    deleteRequest()
+    .then(() => navigate("/"))
+    .then(() => navigate("/blogs"));
+  }
+  console.log({image});
   return (
     <Card
           sx={{
@@ -28,27 +55,35 @@ function Blog({title,desc,image,author}) {
           },
         }}
       >
+     {!isUser && (<Box display="flex">
+            <IconButton onClick={handleEdit} sx={{ marginLeft: "auto" }}>
+              <ModeEditOutlineIcon color="warning" />
+            </IconButton>
+            <IconButton onClick={handleDelete}>
+              <DeleteOutlineIcon color="error" />
+            </IconButton>
+      </Box> )}
     <CardHeader
       avatar={
         <Avatar sx={
           { bgcolor: red[500],
-           width:"100px", height: 50 }
+           width:35, height: 35 }
           } aria-label="name">
-          {author}
+          {author?author.charAt(0):""}
         </Avatar>
       }
       title={title}
-      subheader="September 14, 2016"
+      subheader={date}
     />
     <CardMedia
       component="img"
       height="194"
       image={image}
-      alt="Paella dish"
+      // alt="Paella dish"
     />
     <CardContent>
       <Typography variant="body2" color="text.secondary">
-        {desc}
+        <b>{author}</b>{":"}{desc}
       </Typography>
     </CardContent>
     <CardActions disableSpacing>
@@ -62,5 +97,4 @@ function Blog({title,desc,image,author}) {
     </Card>
     )
 }
-
 export default Blog

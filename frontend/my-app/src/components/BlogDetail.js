@@ -18,7 +18,7 @@ function BlogDetail() {
   };
   const fetchDetails=async()=>{
     const res = await axios
-    .get(`https://localhost:3000/api/blog/${id}`)
+    .get(`https://blogappmern.onrender.com/api/blog/${id}`)
     .catch((err) => console.log(err));
     const data = await res.data;
     // console.log(data);
@@ -38,7 +38,7 @@ function BlogDetail() {
   },[])
   const sendRequest = async () => {
     const res = await axios
-      .put(`http://localhost:3000/api/blog/update/${id}`, {
+      .put(`http://blogappmern.onrender.com/api/blog/update/${id}`, {
         title: inputs.title,
         desc: inputs.desc,
       })

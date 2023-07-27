@@ -8,7 +8,7 @@ function UserBlog() {
   console.log(id);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const sendRequest=async()=>{
-    const res=await axios.get(`http://localhost:3000/api/blog/user/${id}`).catch((err)=>console.log(err))
+    const res=await axios.get(`http://blogappmern.onrender.com/api/blog/user/${id}`).catch((err)=>console.log(err))
     // console.log(res);
     const data=await res.data
     // console.log(data.blogs);

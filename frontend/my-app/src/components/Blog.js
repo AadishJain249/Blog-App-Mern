@@ -37,7 +37,7 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
   const navigate=useNavigate()
   const deleteRequest=async()=>{
     const res = await axios
-    .delete(`http://localhost:3000/api/blog/delete/${id}`)
+    .delete(`http://blogappmern.onrender.com/api/blog/delete/${id}`)
     .catch((err) => console.log(err));
     const data = await res.data;
     // console.log(data);  
@@ -46,7 +46,7 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
   }
   const increment=async()=>{
     const id1 = localStorage.getItem("userId");
-    const res=await axios.put(`http://localhost:3000/api/blog/likes/${id1}/${id}`)
+    const res=await axios.put(`http://blogappmern.onrender.com/api/blog/likes/${id1}/${id}`)
     .catch((err) => console.log(err));
     const data = await res.data;
     // console.log(data);  
@@ -55,7 +55,7 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
   }
   const decrement=async()=>{
     const id1= localStorage.getItem("userId");
-    const res=await axios.put(`http://localhost:3000/api/blog/unlikes/${id1}/${id}`)
+    const res=await axios.put(`http://blogappmern.onrender.com/api/blog/unlikes/${id1}/${id}`)
     .catch((err) => console.log(err));
     const data = await res.data;
     // console.log(data);  

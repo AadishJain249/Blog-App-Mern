@@ -1,4 +1,4 @@
-import React,{useEffect, useState} from "react";
+import React,{useEffect} from "react";
 import Header from "./components/Header";
 import {Routes,Route} from "react-router-dom"
 import Login from "./components/Login";
@@ -26,16 +26,12 @@ function App() {
       </header>
       <main>
         <Routes>
-          {!isLogged ?(<Route path="/login" element={<Login></Login>}></Route>):( // if user is not logged in it will
-          // first ask the user to log in our blog app
-          <>
+          <Route path="/login" element={<Login></Login>}></Route>
           <Route path="/signup" element={<SignUp></SignUp>}></Route>
           <Route path="/blog" element={<Blogs></Blogs>}></Route>
           <Route path="/myblogs" element={<UserBlog></UserBlog>}></Route>
           <Route path="/myblogs/:id" element={<BlogDetail></BlogDetail>}></Route>
           <Route path="/blog/add" element={<AddBlog></AddBlog>}></Route>
-          </>
-          )}
         </Routes>
       </main>
     </React.Fragment>

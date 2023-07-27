@@ -1,4 +1,4 @@
-import React ,{useState}from 'react'
+import React from 'react'
 import {Tabs,Typography,Box,AppBar, Toolbar, Button,createTheme,ThemeProvider, Tab} from '@mui/material'
 import {Link} from 'react-router-dom'
 import {useSelector,useDispatch} from 'react-redux'
@@ -15,7 +15,6 @@ const theme = createTheme({
     },
   });
 function Header() {
-  const [value,setvalue]=useState()
   const dispatch=useDispatch()
   const isLogged=useSelector((state)=>state.isLoggedIn)
   const sendReq=async()=>{
@@ -43,27 +42,28 @@ function Header() {
         <Box display="flex" margin="auto">
           {/* tabs is kind of button feature which help in navigating and tab is child of tabs */}
           <Tabs 
-          // textColor='white'
+
           textColor='white'
-          TabIndicatorProps={{style: {fontWeight:900 }}}
-          value={value} 
-          onChange={(e,val)=>setvalue(val)}
+          TabIndicatorProps={{style: {fontWeight:900}}}
+          // value={value} 
+          // onChange={(e,val)=>setvalue(val)}
           > 
-            <Tab LinkComponent={Link} to="/blog" label="All Blogs"></Tab>
-            <Tab LinkComponent={Link} to="/myblogs" label ="My Blogs"></Tab>
-            <Tab LinkComponent={Link} to="/blog/add" label="Add Blog"/>
+            
+            <Tab LinkComponent={Link} to="/myblogs" label ="My-Blogs"></Tab>
+            <Tab LinkComponent={Link} to="/blog/add" label="Add-Blog"></Tab>
+            <Tab LinkComponent={Link} to="/blog" label="All-Blogs"></Tab>  
           </Tabs>
         </Box>
         <Box display="flex" marginLeft="auto">
         
         <ThemeProvider theme={theme}>
-        <Button
+        {!isLogged &&<Button
         varient="contained"
         LinkComponent={Link}
         to="/signup"
         sx={{ margin: 1, borderRadius: 10 ,fontWeight:900}}
         color="primary"
-        >SignUp</Button>
+        >SignUp</Button>}
 
         {isLogged &&<Button 
         onClick={handleLog}
@@ -74,12 +74,12 @@ function Header() {
         color="primary"
         >LogOut</Button>}
 
-        <Button 
+        {!isLogged && <Button 
         LinkComponent={Link}
         to="/login"
         varient="contained"
         sx={{ margin: 1, borderRadius: 10,fontWeight:900 }}
-        color="secondary">Login</Button>
+        color="secondary">Login</Button>}
         </ThemeProvider>
         </Box>
         </Toolbar>

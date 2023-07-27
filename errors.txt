@@ -1,2 +1,0 @@
- 1. Logout 
- 2. Image upload error

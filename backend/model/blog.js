@@ -12,8 +12,26 @@ const BlogSchema=mongoose.Schema({
         type:String,
         require:true
     },
+    // count of total blogs liked + unliked
+    liked:{
+        type:Number,
+        default:0,
+        require:true
+    },
+    // how many users like this blog
+    likedby:[{
+        type: mongoose.Schema.Types.ObjectId,
+        require:true,
+        ref:'user'
+    }],
+    // how many users unlike this blog
+    unlikedby:[{
+        type: mongoose.Schema.Types.ObjectId,
+        require:true,
+        ref:'user'
+    }],
     author:{ // id
-        type: mongoose.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref:'user',// connecting both models
         required:true        
     }

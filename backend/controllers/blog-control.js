@@ -17,7 +17,7 @@ const getBlog=async(req,res,next)=>{
     return res.status(200).json({blogs});
 }
 const addBlog=async(req,res,next)=>{
-    const {title,desc,image,author}=req.body
+    const {title,desc,image,liked,author}=req.body
     let exist;
     try
     {
@@ -96,23 +96,63 @@ const getByUserId=async(req,res,next)=>{
     // console.log(userblogs);
     return res.status(200).json({userblogs});
 }
-const deleteBlog=async(req,res,next)=>{
-    const id=req.params.id;
-    let blogs
-    try {
-        blogs=await blog.findByIdAndRemove(id)
-        blogs.populate('author') // populate tera ref dega user user me bhi details dhundega
-        await blog.user.blogs.pull(blog); // user me se id remove 
-        await blog.user.save()
-    } catch (error) {
-        return console.log(error);   
-    }
-    if(!blogs)
+const deleteBlog=async(req,res,next)=>
+{
+    var id=req.params.id; //blog id
+    let b
+    try 
     {
-        return res.status(400).json({message:"Unable to delete"})
+        b=await blog.findById(id)
+        if(!b)
+        {
+            return res.status(400).json({message:"Unable to delete"})
+        }
+        var id1=b.author
+        await user.update({ _id: id1 }, { $pull: { blogs:id } })
+        await user.update({ _id: id1 }, { $pull: { likedblog:id } })
+        await user.update({ _id: id1 }, { $pull: { unlikedblog:id } })
+        b.delete()
+        res.status(200).json({
+            success: true,
+          });
     }
-    return res.status(200).json({message:"Succesfully deleted"})
+    catch(error)
+    {
+        console.log(error);
+    }
+}
+const upvote=async(req,res,next)=>
+{
+    const userid=req.params.id1// user id in blog to check it is present in like or unlike
+    const blogid=req.params.id; //blog id 
+    console.log(userid+" "+blogid);
+    let blogs=await blog.findById(blogid) // finding particular blog
+    const flag=blogs.likedby.includes(userid)
+    if(!flag)
+    {
+        blogs.likedby.push(userid) 
+        // await blogs.update({ _id: blogid },{ $pull: { unlikedby:userid } })   
+        blogs.liked+=1;
+    }
+    await blogs.save()
+    res.status(200).send(blogs)
+}
+const downvote=async(req,res,next)=>
+{
+    
+    const userid=req.params.id1// user id in blog to check it is present in like or unlike
+    const blogid=req.params.id; //blog id 
+    let blogs=await blog.findById(blogid) // finding particular blog
+    const flag=blogs.unlikedby.includes(userid)
+    if(!flag)
+    {
+        blogs.unlikedby.push(userid) 
+        // await blogs.update({ _id: blogid },{ $pull: { unlikedby:userid } })   
+        blogs.liked-=1;
+    }
+    await blogs.save()
+    res.status(200).send(blogs)
 }
 module.exports={
-    getBlog,addBlog,getbyId,getByUserId,updateBlog,deleteBlog
+    getBlog,addBlog,getbyId,getByUserId,updateBlog,deleteBlog,upvote,downvote
 }

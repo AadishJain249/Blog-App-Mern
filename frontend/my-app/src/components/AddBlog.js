@@ -1,16 +1,29 @@
 import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
+// import { makeStyles } from "@mui/material";
+// import { makeStyles } from '@mui/styles';
 import { useNavigate } from "react-router-dom";
 // import { useStyles } from "../components/util"
 const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
 const AddBlog = () => {
+  // const useStyles = makeStyles({
+  //   underline: {
+  //     "&&&:before": {
+  //       borderBottom: "none"
+  //     },
+  //     "&&:after": {
+  //       borderBottom: "none"
+  //     }
+  //   }
+  // });
   // const classes = useStyles();
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     title: "",
     desc: "",
     image: "",
+    liked:0
   });
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -20,10 +33,11 @@ const AddBlog = () => {
   };
   const sendRequest = async () => {
     const res = await axios
-      .post("http://localhost:3000/api/blog/add", {
+      .post("https://blogappmern.onrender.com/api/blog/add", {
         title: inputs.title,
         desc: inputs.desc,
         image: inputs.image,
+        liked:1,
         author: localStorage.getItem("userId"),
       })
       .catch((err) => console.log(err));
@@ -76,13 +90,13 @@ const AddBlog = () => {
             variant="outlined"
           />
           <InputLabel 
-          // className={classes.font}
            sx={labelStyles}>
             Description
           </InputLabel>
           <TextField
             // className={classes.font}
             name="desc"
+            //  InputProps={{ classes }}
             onChange={handleChange}
             value={inputs.description}
             margin="auto"

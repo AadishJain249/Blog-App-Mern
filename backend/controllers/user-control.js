@@ -67,7 +67,7 @@ const login=async(req,res,next)=>{
         return res.status(400).json({message: "wrong password"})
     }
     const token=jwt.sign({id:exist._id},secret,{
-        expiresIn:"7days"
+        expiresIn:"29days"
     })
     res.cookie(String(exist._id),token,{
         path:'/',
@@ -139,7 +139,7 @@ const loginUser = async (req, res, next) => {
           req.cookies[`${_user.id}`] = ""; // header se clear karna
           return res.status(200).json({ message: "Successfully Logged Out" });
       })
-    //   next()
+      next()
   }
 module.exports={
     getUser,signup,login,verify,loginUser,logout

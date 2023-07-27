@@ -1,0 +1,30 @@
+.main
+{
+    display: flex;    
+}
+.a1,.a2,.a3
+{
+    padding-left: 10px;
+}
+.box1
+{
+    display: flex;
+}
+.box2
+{
+    display: flex;
+    margin-left: auto;
+}
+.b1,.b2
+{
+    padding-left: 10px;
+}
+.b3
+{
+    padding-left: 10px;
+    padding-top: 3px;
+
+}
+button{
+    border-radius: 30%;
+}

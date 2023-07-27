@@ -7,7 +7,6 @@ function BlogDetail() {
   const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
-  
   });
   const [blog,setBlogs]=useState()
   const id=useParams().id
@@ -19,7 +18,7 @@ function BlogDetail() {
   };
   const fetchDetails=async()=>{
     const res = await axios
-    .get(`http://localhost:3000/api/blog/${id}`)
+    .get(`https://localhost:3000/api/blog/${id}`)
     .catch((err) => console.log(err));
     const data = await res.data;
     // console.log(data);
@@ -36,7 +35,7 @@ function BlogDetail() {
         desc:data.blogs.desc
       })
     })
-  },[id])
+  },[])
   const sendRequest = async () => {
     const res = await axios
       .put(`http://localhost:3000/api/blog/update/${id}`, {

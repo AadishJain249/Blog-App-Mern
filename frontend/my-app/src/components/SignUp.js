@@ -19,7 +19,7 @@ const handleChange = (e) => {
     // console.log(e.target.name,"aadish",e.target.value);
   };
   const sendRequest=async()=>{
-    const response=await axios.post('http://localhost:3000/api/user/signup',{
+    const response=await axios.post('https://blogappmern.onrender.com/api/user/signup',{
       name:inputs.name,
       email:inputs.email,
       password:inputs.password,
@@ -53,7 +53,8 @@ const handleChange = (e) => {
             variant="h4"
             color="Black"
             fontFamily="cursive"
-        >SignUp</Typography>
+        >SignUp
+        </Typography>
         <TextField
               name="name"
               onChange={handleChange}
@@ -61,7 +62,8 @@ const handleChange = (e) => {
               variant="outlined"
               placeholder="Name"
               margin="normal"
-        ></TextField>
+        >
+        </TextField>
         <TextField
               name="email"
               onChange={handleChange}

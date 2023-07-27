@@ -20,7 +20,7 @@ const handleChange = (e) => {
     // console.log(e.target.name,"aadish",e.target.value);
   };
   const sendRequest=async()=>{
-    const response=await axios.post('http://localhost:3000/api/user/login',{
+    const response=await axios.post('https://blogappmern.onrender.com/api/user/login',{
       email:inputs.email,
       password:inputs.password,
     }).catch((err) => {

@@ -57,29 +57,29 @@ function Header() {
         <Box display="flex" marginLeft="auto">
         
         <ThemeProvider theme={theme}>
-        {!isLogged &&<Button
+        <Button
         varient="contained"
         LinkComponent={Link}
         to="/signup"
         sx={{ margin: 1, borderRadius: 10 ,fontWeight:900}}
         color="primary"
-        >SignUp</Button>}
+        >SignUp</Button>
 
-        {isLogged &&<Button 
+        <Button 
         onClick={handleLog}
         LinkComponent={Link}
         to="/"
         varient="contained"
         sx={{ margin: 1, borderRadius: 10 ,fontWeight:900}}
         color="primary"
-        >LogOut</Button>}
+        >LogOut</Button>
 
-        {!isLogged && <Button 
+        <Button 
         LinkComponent={Link}
         to="/login"
         varient="contained"
         sx={{ margin: 1, borderRadius: 10,fontWeight:900 }}
-        color="secondary">Login</Button>}
+        color="secondary">Login</Button>
         </ThemeProvider>
         </Box>
         </Toolbar>

@@ -14,7 +14,7 @@ const getBlog=async(req,res,next)=>{
     {
         return res.status(200).json({message:"No Blogs Found"});
     }
-    return res.status(200).json({});
+    return res.status(200).json({blogs});
 }
 const addBlog=async(req,res,next)=>{
     const {title,desc,image,liked,author}=req.body

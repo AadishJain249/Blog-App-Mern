@@ -50,6 +50,7 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
     .catch((err) => console.log(err));
     const data = await res.data;
     // console.log(data);  
+    console.log(data);
     setcount(data.liked)
     return data;
   }
@@ -58,7 +59,7 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
     const res=await axios.put(`http://blogappmern.onrender.com/api/blog/unlikes/${id1}/${id}`)
     .catch((err) => console.log(err));
     const data = await res.data;
-    // console.log(data);  
+    console.log(data);  
     setcount(data.liked)
     return data;
   }

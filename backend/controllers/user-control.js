@@ -14,6 +14,7 @@ const getUser= async(req,res,next)=>{
     {
         return res.status(400).json({message:"user doesn't exist"});
     }
+    console.log(Users);
     return res.status(200).json({Users}) // this will send list of users 
 }
 const signup=async(req,res,next)=>{

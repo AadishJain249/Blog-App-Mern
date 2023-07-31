@@ -17,14 +17,6 @@ const UserSchema=mongoose.Schema({
         minlength:8,
         require:true
     },
-    // likedblog: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'blog'
-    // }],
-    // unlikedblog: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'blog'
-    // }],
     blogs:[{ // particular user blogs list 1 per time
         type:mongoose.Schema.Types.ObjectId,
         ref:'blog',// connecting both models

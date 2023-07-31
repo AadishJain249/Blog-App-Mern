@@ -20,13 +20,13 @@ const BlogSchema=mongoose.Schema({
     },
     // how many users like this blog
     likedby:[{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId, // user id who liked this
         require:true,
         ref:'user'
     }],
     // how many users unlike this blog
     unlikedby:[{
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,// user id who unliked this
         require:true,
         ref:'user'
     }],

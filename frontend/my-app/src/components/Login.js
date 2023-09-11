@@ -1,85 +1,138 @@
-import React from 'react'
+import React from "react";
 import { Box, Button, TextField, Typography } from "@mui/material";
-import  { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import {useDispatch} from 'react-redux'
-import { authActions } from '../store/index';
+import Avatar from "@mui/material/Avatar";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions, login } from "../slice/authSlice";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import CssBaseline from "@mui/material/CssBaseline";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+function Copyright(props) {
+  return (
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
+      <Link color="inherit" href="https://mui.com/">
+        Blog-App
+      </Link>{" "}
+      {new Date().getFullYear()}
+      {"."}
+    </Typography>
+  );
+}
 function Login() {
-  const history=useNavigate()
-  const dispatch=useDispatch()
-  const [inputs,setInput]=useState({
+  const defaultTheme = createTheme();
+
+  const history = useNavigate();
+  const dispatch = useDispatch();
+  const { users, token, flag } = useSelector((state) => state.auth);
+  // console.log(flag);
+  // console.log(users);
+  // console.log(token);
+  const [inputs, setInput] = useState({
     email: "",
-    password: ""
-  })
-const handleChange = (e) => {
+    password: "",
+  });
+  const handleChange = (e) => {
     setInput((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
     // console.log(e.target.name,"aadish",e.target.value);
   };
-  const sendRequest=async()=>{
-    const response=await axios.post('https://blogappmern.onrender.com/api/user/login',{
-      email:inputs.email,
-      password:inputs.password,
-    }).catch((err) => {
-      // eslint-disable-next-line no-cond-assign
-      if(err.status=404){
-         alert("User has not logged in");
-      }})
+  const sendRequest = async () => {
+    const response = await axios
+      .post("https://blogappmern.onrender.com/api/user/login", {
+        email: inputs.email,
+        password: inputs.password,
+      })
+      .catch((err) => {
+        // eslint-disable-next-line no-cond-assign
+        if ((err.status = 404)) {
+          alert("User has not logged in");
+        }
+      });
     // console.log(response);
-    const data=await response.data
-    return data
-  }
-  const formHandler=(e)=>{
-    e.preventDefault()
+    const data = await response.data;
+    dispatch(login(data));
+    return data;
+  };
+  const handleSubmit = (e) => {
+    e.preventDefault();
     // console.log(inputs);
     sendRequest()
-    .then((data)=>localStorage.setItem("userId",data.user._id))
-    .then(() => dispatch(authActions.login()))
-    .then(()=>history('/blog'))
-  }
+      .then((data) => localStorage.setItem("userId", data.user._id))
+      .then(() => history("/blog"));
+  };
   return (
-    <form onSubmit={formHandler}>
-        <Box 
-            marginLeft="auto"
-            marginRight="auto"
-            width={300}
-            height={700}
-            display="flex"
-            flexDirection={"column"}
-            justifyContent="center"
-            alignItems="center"
+    <ThemeProvider theme={defaultTheme}>
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <Box
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            padding: 5,
+          }}
         >
-        <Typography 
-            variant="h4"
-            color="Black"
-            fontFamily="cursive"
-        >Login</Typography>
-        <TextField
-              name="email"
-              onChange={handleChange}
-              value={inputs.email}
-              type={"email"}
-              variant="outlined"
-              placeholder="Email"
-              margin="normal"
-        ></TextField>
-        <TextField
-              name="password"
-              onChange={handleChange}
-              value={inputs.password}
-              type="password"
-              variant="outlined"
-              placeholder="Password"
-              margin="normal"
-        ></TextField>
-         <Button variant="contained" type="submit">
+          <Avatar sx={{ m: 1, bgcolor: "#FFC300" }}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
             Login
-          </Button>
+          </Typography>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
+            <TextField
+              onChange={handleChange}
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              onChange={handleChange}
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Submit
+            </Button>
           </Box>
-    </form>
-    )
+        </Box>
+        <Copyright sx={{ mt: 8, mb: 4 }} />
+      </Container>
+    </ThemeProvider>
+  );
 }
-export default Login
+export default Login;

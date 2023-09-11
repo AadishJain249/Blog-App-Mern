@@ -1,30 +1,34 @@
-import React from 'react'
-import {useEffect,useState} from 'react'
-import axios from 'axios'
-import Blog from '../components/Blog'
+import React from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import Blog from "../components/Blog";
 function UserBlog() {
-  const [users, setUser] = useState();
+  const [user, setUser] = useState();
   const id = localStorage.getItem("userId");
-  console.log(id);
+  const { users, token, flag } = useSelector((state) => state.auth);
+  // console.log(token);
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const sendRequest=async()=>{
-    const res=await axios.get(`http://blogappmern.onrender.com/api/blog/user/${id}`).catch((err)=>console.log(err))
+  const sendRequest = async () => {
+    const res = await axios
+      .get(`http://blogappmern.onrender.com/api/blog/user/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .catch((err) => console.log(err));
     // console.log(res);
-    const data=await res.data
+    const data = await res.data;
     // console.log(data.blogs);
-    return data
-  }
-  useEffect(()=>{
-    sendRequest().then((data)=>
-    setUser(data.userblogs)
-    )
-  },[])
+    return data;
+  };
+  useEffect(() => {
+    sendRequest().then((data) => setUser(data.userblogs));
+  }, []);
 
   return (
     <div>
-      {users &&
-        users.blogs &&
-        users.blogs.map((blog, index) => (
+      {user &&
+        user.blogs &&
+        user.blogs.map((blog, index) => (
           <Blog
             id={blog._id}
             key={index}
@@ -32,10 +36,10 @@ function UserBlog() {
             title={blog.title}
             desc={blog.desc}
             image={blog.image}
-            author={users.name}
+            author={user.name}
           />
         ))}
     </div>
-  )
+  );
 }
-export default UserBlog
+export default UserBlog;

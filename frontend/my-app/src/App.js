@@ -8,33 +8,28 @@ import UserBlog from "./components/UserBlog";
 import BlogDetail from "./components/BlogDetail";
 import SignUp from "./components/SignUp";
 import {useSelector,useDispatch} from 'react-redux'
-import { authActions } from "./store";
 function App() {
-  const dispath=useDispatch()
-  const isLogged=useSelector((state)=>state.isLoggedIn)
-  // console.log(isLogged);
-  useEffect(()=>{
-    if(localStorage.getItem("userId"))
-    {
-      dispath(authActions.login())
-    }
-  },[dispath])
+  const { users, token, flag } = useSelector((state) => state.auth);
+  console.log(flag);
   return (
     <React.Fragment>
-      <header>
-      <Header></Header>
-      </header>
-      <main>
-        <Routes>
-          <Route path="/login" element={<Login></Login>}></Route>
-          <Route path="/signup" element={<SignUp></SignUp>}></Route>
-          <Route path="/blog" element={<Blogs></Blogs>}></Route>
-          <Route path="/myblogs" element={<UserBlog></UserBlog>}></Route>
-          <Route path="/myblogs/:id" element={<BlogDetail></BlogDetail>}></Route>
-          <Route path="/blog/add" element={<AddBlog></AddBlog>}></Route>
-        </Routes>
-      </main>
-    </React.Fragment>
+    <header>
+      {flag &&<Header />}
+    </header>
+    <main>
+      <Routes>
+          <>
+            <Route path="/" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+            {flag &&<Route path="/blog" element={<Blogs />} />}
+            {flag &&<Route path="/blog/add" element={<AddBlog />} />}
+            {flag &&<Route path="/myblogs" element={<UserBlog/>} />}
+            {flag &&<Route path="/myblogs/:id" element={<BlogDetail />} />}
+          </>
+      </Routes>
+    </main>
+  </React.Fragment>
   )
+
 }
 export default App;

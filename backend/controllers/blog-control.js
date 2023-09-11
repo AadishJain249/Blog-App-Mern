@@ -1,7 +1,5 @@
 const user = require("../model/user");
 const blog=require("../model/blog");
-const mongoose=require('mongoose');
-const {findByIdAndUpdate} = require("../model/user");
 const getBlog=async(req,res,next)=>{
     let blogs;
     try {

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import axios from "axios";
+import { useSelector } from 'react-redux';
 import {useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 function BlogDetail() {
@@ -8,6 +9,7 @@ function BlogDetail() {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
   });
+  const {token}=useSelector((state)=>state.auth)
   const [blog,setBlogs]=useState()
   const id=useParams().id
   const handleChange = (e) => {
@@ -18,7 +20,10 @@ function BlogDetail() {
   };
   const fetchDetails=async()=>{
     const res = await axios
-    .get(`https://blogappmern.onrender.com/api/blog/${id}`)
+    .get(`https://blogappmern.onrender.com/api/blog/${id}`,
+    {
+      headers: {Authorization: `Bearer ${token}`},
+    })
     .catch((err) => console.log(err));
     const data = await res.data;
     // console.log(data);
@@ -41,6 +46,9 @@ function BlogDetail() {
       .put(`http://blogappmern.onrender.com/api/blog/update/${id}`, {
         title: inputs.title,
         desc: inputs.desc,
+      },
+      {
+        headers: {Authorization: `Bearer ${token}`},
       })
       .catch((err) => console.log(err));
     const data = await res.data;
@@ -50,7 +58,7 @@ function BlogDetail() {
     e.preventDefault();
     // console.log(inputs);
     sendRequest()
-      .then((data) => console.log(data))
+      .then((data) => console.log())
       .then(() => navigate("/myblogs"));
   };
   

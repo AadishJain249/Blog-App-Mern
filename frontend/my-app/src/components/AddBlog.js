@@ -1,29 +1,25 @@
 import { Box, Button, InputLabel, TextField, Typography } from "@mui/material";
 import axios from "axios";
 import React, { useState } from "react";
-// import { makeStyles } from "@mui/material";
-// import { makeStyles } from '@mui/styles';
+import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
-// import { useStyles } from "../components/util"
+import { useDispatch, useSelector } from "react-redux";
+
 const labelStyles = { mb: 1, mt: 2, fontSize: "24px", fontWeight: "bold" };
 const AddBlog = () => {
-  // const useStyles = makeStyles({
-  //   underline: {
-  //     "&&&:before": {
-  //       borderBottom: "none"
-  //     },
-  //     "&&:after": {
-  //       borderBottom: "none"
-  //     }
-  //   }
-  // });
-  // const classes = useStyles();
+  const useStyles = makeStyles({
+    font: {
+      fontFamily: "Roboto !important",
+    },
+  });
+  const classes = useStyles();
+  const {token}=useSelector((state)=>state.auth)
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     title: "",
     desc: "",
     image: "",
-    liked:0
+    liked: 0,
   });
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -33,13 +29,19 @@ const AddBlog = () => {
   };
   const sendRequest = async () => {
     const res = await axios
-      .post("https://blogappmern.onrender.com/api/blog/add", {
-        title: inputs.title,
-        desc: inputs.desc,
-        image: inputs.image,
-        liked:1,
-        author: localStorage.getItem("userId"),
-      })
+      .post(
+        "https://blogappmern.onrender.com/api/blog/add",
+        {
+          title: inputs.title,
+          desc: inputs.desc,
+          image: inputs.image,
+          liked: 0,
+          author: localStorage.getItem("userId"),
+        },
+        {
+          headers: {Authorization: `Bearer ${token}`},
+        }
+      )
       .catch((err) => console.log(err));
     const data = await res.data;
     return data;
@@ -48,7 +50,7 @@ const AddBlog = () => {
     e.preventDefault();
     // console.log(inputs);
     sendRequest()
-      .then((data) => console.log(data))
+      .then((data) => console.log())
       .then(() => navigate("/blog"));
   };
   return (
@@ -67,7 +69,6 @@ const AddBlog = () => {
           width={"50%"}
         >
           <Typography
-            // className={classes.font}
             fontWeight={"bold"}
             padding={3}
             color="grey"
@@ -76,39 +77,36 @@ const AddBlog = () => {
           >
             Post Your Blog
           </Typography>
-          <InputLabel 
-          // className={classes.font}
-           sx={labelStyles}>
+          <InputLabel className={classes.font} sx={labelStyles}>
             Title
           </InputLabel>
           <TextField
-            // className={classes.font}
+            InputProps={{ disableUnderline: true }}
+            className={classes.font}
             name="title"
             onChange={handleChange}
             value={inputs.title}
             margin="auto"
             variant="outlined"
           />
-          <InputLabel 
-           sx={labelStyles}>
-            Description
-          </InputLabel>
+          <InputLabel>Description</InputLabel>
           <TextField
-            // className={classes.font}
+            InputProps={{ disableUnderline: true }}
+            className={classes.font}
             name="desc"
-            //  InputProps={{ classes }}
             onChange={handleChange}
             value={inputs.description}
             margin="auto"
             variant="outlined"
           />
-          <InputLabel 
-          // className={classes.font}
-           sx={labelStyles}>
+          <InputLabel
+            // className={classes.font}
+            sx={labelStyles}
+          >
             ImageURL
           </InputLabel>
           <TextField
-            // className={classes.font}
+            InputProps={{ disableUnderline: true }}
             name="image"
             onChange={handleChange}
             value={inputs.image}

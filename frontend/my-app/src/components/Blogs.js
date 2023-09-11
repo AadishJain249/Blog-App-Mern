@@ -2,18 +2,23 @@
 import React,{useEffect,useState} from 'react'
 import axios from 'axios'
 import Blog from '../components/Blog'
-function Blogs() {
+import { useSelector } from 'react-redux'
+function Blogs() 
+{
+  const {token}=useSelector((state)=>state.auth)
   const [blogs,setBlogs]=useState()
   const sendRequest=async()=>
   {
-    const res=await axios.get('http://blogappmern.onrender.com/api/blog/').catch((err)=>console.log(err))
+    const res=await axios.get('http://blogappmern.onrender.com/api/blog/',
+    {
+      headers: {Authorization: `Bearer ${token}`},
+    }).catch((err)=>console.log(err))
     const data=await res.data
     return data
   }
   useEffect(()=>{
     sendRequest().then((data)=>setBlogs(data.blogs))
   },[])
-  console.log(blogs);
   return (
     <div>
       {blogs &&blogs.map((blog,err)=>(

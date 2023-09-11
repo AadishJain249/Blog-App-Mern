@@ -13,7 +13,6 @@ import { Box } from '@mui/system';
 import 'materialize-css/dist/css/materialize.min.css'
 import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-// import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import {
   FacebookShareButton,
@@ -24,7 +23,6 @@ import {
   TwitterShareButton
 } from 'react-share';
 import axios from "axios";
-
 function Blog({title,desc,image,author,id,isUser,liked}) {
   const Navigate=useNavigate()
   const isLogged=useSelector((state)=>state.isLoggedIn)
@@ -35,9 +33,13 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
     Navigate(`/myblogs/${id}`)
   }
   const navigate=useNavigate()
+  const {token}=useSelector((state)=>state.auth)
   const deleteRequest=async()=>{
     const res = await axios
-    .delete(`http://blogappmern.onrender.com/api/blog/delete/${id}`)
+    .delete(`http://blogappmern.onrender.com/api/blog/delete/${id}`,
+    {
+      headers: {Authorization: `Bearer ${token}`},
+    })
     .catch((err) => console.log(err));
     const data = await res.data;
     // console.log(data);  
@@ -46,20 +48,26 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
   }
   const increment=async()=>{
     const id1 = localStorage.getItem("userId");
-    const res=await axios.put(`http://blogappmern.onrender.com/api/blog/likes/${id1}/${id}`)
+    const res=await axios.put(`http://blogappmern.onrender.com/api/blog/likes/${id1}/${id}`,
+    {
+      headers: {Authorization: `Bearer ${token}`},
+    })
     .catch((err) => console.log(err));
     const data = await res.data;
     // console.log(data);  
-    console.log(data);
+    // console.log(data);
     setcount(data.liked)
     return data;
   }
   const decrement=async()=>{
     const id1= localStorage.getItem("userId");
-    const res=await axios.put(`http://blogappmern.onrender.com/api/blog/unlikes/${id1}/${id}`)
+    const res=await axios.put(`http://blogappmern.onrender.com/api/blog/unlikes/${id1}/${id}`,
+    {
+      headers: {Authorization: `Bearer ${token}`},
+    })
     .catch((err) => console.log(err));
     const data = await res.data;
-    console.log(data);  
+    // console.log(data);  
     setcount(data.liked)
     return data;
   }
@@ -113,44 +121,38 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
         <b>{author}</b>{":"}{desc}
       </Typography>
     </CardContent>
-    <div class="main">
+    <div className="main">
     
-    <div class="box1">
-    <div class="a1">
+    <div className="box1">
+    <div className="a1">
     <FacebookShareButton
     url='https://www.facebook.com/'>
     <FacebookIcon size={40} round={true} />
     </FacebookShareButton>
     </div>
-    <div class="a2">
+    <div className="a2">
     <WhatsappShareButton url='https://www.whatsapp.com/'>
     <WhatsappIcon size={40} round={true} />
     </WhatsappShareButton>
     </div>
-    <div class="a3">
+    <div className="a3">
     <TwitterShareButton url='https://www.twitter.com/'>
     <TwitterIcon size={40} round={true}></TwitterIcon>
     </TwitterShareButton>   
     </div>
     </div>
-    
-    <div class="box2">
-
-    {isLogged && <div class="b1">
-    <button class="material-icons" onClick={increment}>thumb_up</button>
-    </div>}
-
-    {isLogged &&<div class="b2">
-    <button class="material-icons" onClick={decrement}>thumb_down</button>   
-    </div>}
-    <div class="b3">
+    <div className="box2">
+    <div className="b1">
+    <button className="material-icons" onClick={increment}>thumb_up</button>
+    </div>
+    <div className="b2">
+    <button className="material-icons" onClick={decrement}>thumb_down</button>   
+    </div>
+    <div className="b3">
     <b>{count}</b>
     </div>
-    
     </div>
-    
     </div>
-
     </Card>
 
     )

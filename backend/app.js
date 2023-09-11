@@ -1,9 +1,8 @@
 const express=require('express')
 const app=express()
-const cookie=require('cookie-parser')
-app.use(cookie())
 const cors = require('cors');
 const dotenv = require("dotenv");
+var bodyParser = require('body-parser');
 dotenv.config();
 app.use((req, res, next) => {
     res.append('Access-Control-Allow-Origin', ["*"]);
@@ -11,6 +10,7 @@ app.use((req, res, next) => {
     res.append('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
+app.use(bodyParser());
 app.use(cors({
     origin:["http://localhost:3000","https://blogappmern.onrender.com"]
 }));

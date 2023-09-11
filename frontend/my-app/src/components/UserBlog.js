@@ -6,8 +6,12 @@ import Blog from "../components/Blog";
 function UserBlog() {
   const [user, setUser] = useState();
   const id = localStorage.getItem("userId");
-  const { users, token, flag } = useSelector((state) => state.auth);
-  // console.log(token);
+  const data=localStorage.getItem('persist:root')
+  const res=JSON.parse(data)
+  const tokens=res.token;
+  var token = tokens.substring(1, tokens.length-1);
+
+  // const { users, token, flag } = useSelector((state) => state.auth);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const sendRequest = async () => {
     const res = await axios
@@ -15,9 +19,7 @@ function UserBlog() {
         headers: { Authorization: `Bearer ${token}` },
       })
       .catch((err) => console.log(err));
-    // console.log(res);
     const data = await res.data;
-    // console.log(data.blogs);
     return data;
   };
   useEffect(() => {

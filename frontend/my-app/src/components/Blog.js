@@ -25,8 +25,12 @@ import {
 import axios from "axios";
 function Blog({title,desc,image,author,id,isUser}) {
   const Navigate=useNavigate()
-  console.log(id);
-  const isLogged=useSelector((state)=>state.isLoggedIn)
+  // console.log(id);
+  const data=localStorage.getItem('persist:root')
+  const res=JSON.parse(data)
+  const tokens=res.token;
+  var token = tokens.substring(1, tokens.length-1);
+
   const current = new Date();
   const [count,setcount]=useState()
   const date = `${current.getDate()}/${current.getMonth()+1}/${current.getFullYear()}`;
@@ -34,8 +38,8 @@ function Blog({title,desc,image,author,id,isUser}) {
     Navigate(`/myblogs/${id}`)
   }
   const navigate=useNavigate()
-  const {token}=useSelector((state)=>state.auth)
-  console.log(token);
+  // const {token}=useSelector((state)=>state.auth)
+  // console.log(token);
   const deleteRequest=async()=>{
     const res = await axios
     .delete(`http://blogappmern.onrender.com/api/blog/delete/${id}`,
@@ -45,41 +49,28 @@ function Blog({title,desc,image,author,id,isUser}) {
     .catch((err) => console.log(err));
     const data = await res.data;
     // console.log(data);  
-    setcount(data)
     return data;
   }
-  const increment=async()=>{
-    const id1 = localStorage.getItem("userId");
-    // console.log(id1+" "+"aadish");
-    const res=await axios.put(`http://blogappmern.onrender.com/api/blog/likes/${id1}/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-    },
-    })
-    .catch((err) => console.log(err));
-    const data = await res.data;
-    // console.log(data);  
-    // console.log(data);
-    setcount(data.liked)
-    return data;
-  }
-  const decrement=async()=>{
-    const id1= localStorage.getItem("userId");
-    const res=await axios.put(`http://blogappmern.onrender.com/api/blog/unlikes/${id1}/${id}`,
-    {
-      headers: {Authorization: `Bearer ${token}`},
-    })
-    .catch((err) => console.log(err));
-    const data = await res.data;
-    // console.log(data);  
-    setcount(data.liked)
-    return data;
-  }
-  
+  // const likedRequest=async()=>{
+  //   const id1 = localStorage.getItem("userId");
+  //   console.log(id1+" "+"aadish");
+  //   const res=await axios.put(`http://blogappmern.onrender.com/api/blog/likes/${id1}/${id}`,
+  //   {
+  //     headers: {
+  //       Authorization: `Bearer ${token}`,
+  //       'Access-Control-Allow-Origin': '*',
+  //       'Access-Control-Allow-Methods': '*',
+  //   },
+  //   })
+  //   .catch((err) => console.log(err));
+  //   const data=await res.data;
+  //   console.log(data);
+  //   // setcount(data)
+  //   return data;
+  // }
   const handleDelete=()=>{
     deleteRequest()
-    .then(() => navigate("/myblogs"))
+    .then(() => navigate("/blog"))
   }
   return (
     <Card
@@ -147,10 +138,10 @@ function Blog({title,desc,image,author,id,isUser}) {
     </div>
     <div className="box2">
     <div className="b1">
-    <button className="material-icons" onClick={increment}>thumb_up</button>
+    {/* <button className="material-icons" onClick={likedRequest}>thumb_up</button> */}
     </div>
     <div className="b2">
-    <button className="material-icons" onClick={decrement}>thumb_down</button>   
+    {/* <button className="material-icons" onClick={decrement}>thumb_down</button>    */}
     </div>
     <div className="b3">
     <b>{count}</b>

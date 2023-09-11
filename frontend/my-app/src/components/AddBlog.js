@@ -13,7 +13,11 @@ const AddBlog = () => {
     },
   });
   const classes = useStyles();
-  const {token}=useSelector((state)=>state.auth)
+  const data=localStorage.getItem('persist:root')
+  const res=JSON.parse(data)
+  const tokens=res.token;
+  var token = tokens.substring(1, tokens.length-1);
+  // const {token}=useSelector((state)=>state.auth)
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     title: "",

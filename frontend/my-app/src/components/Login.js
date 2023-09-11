@@ -34,10 +34,7 @@ function Login() {
 
   const history = useNavigate();
   const dispatch = useDispatch();
-  const { users, token, flag } = useSelector((state) => state.auth);
-  // console.log(flag);
-  // console.log(users);
-  // console.log(token);
+  // const { users, token, flag } = useSelector((state) => state.auth);
   const [inputs, setInput] = useState({
     email: "",
     password: "",
@@ -47,7 +44,6 @@ function Login() {
       ...prev,
       [e.target.name]: e.target.value,
     }));
-    // console.log(e.target.name,"aadish",e.target.value);
   };
   const sendRequest = async () => {
     const response = await axios
@@ -61,14 +57,12 @@ function Login() {
           alert("User has not logged in");
         }
       });
-    // console.log(response);
     const data = await response.data;
     dispatch(login(data));
     return data;
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // console.log(inputs);
     sendRequest()
       .then((data) => localStorage.setItem("userId", data.user._id))
       .then(() => history("/blog"));

@@ -9,7 +9,12 @@ function BlogDetail() {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
   });
-  const {token}=useSelector((state)=>state.auth)
+  const data=localStorage.getItem('persist:root')
+  const res=JSON.parse(data)
+  const tokens=res.token;
+  var token = tokens.substring(1, tokens.length-1);
+
+  // const {token}=useSelector((state)=>state.auth)
   const [blog,setBlogs]=useState()
   const id=useParams().id
   const handleChange = (e) => {
@@ -34,7 +39,7 @@ function BlogDetail() {
     fetchDetails().then((data)=>{
       setBlogs(data)
       // console.log(setBlogs);
-      console.log(data);
+      // console.log(data);
       setInputs({
         title:data.blogs.title,
         desc:data.blogs.desc

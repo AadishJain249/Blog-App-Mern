@@ -118,83 +118,29 @@ const deleteBlog=async(req,res)=>
         console.log(error);
     }
 }
-const upvote=async(req,res)=>
+const like=async(req,res)=>
 {
     const userid=req.params.id1// user id in blog to check it is present in like or unlike
+    const users=await user.findById(userid)
     const blogid=req.params.id; // blog id 
+    let blogs=await blog.findById(blogid) //finding particular blog
+    const flag=users.likedBy.includes(blogid)
+    if(flag)
+    {
+        return res.status(200).send("You Already Liked The Blog")   
+    }
+    users.likedBy.push(blogid);
+    console.log(users);
+    blogs.likes++;
+    console.log(blogs);
     try {
-     
-    let blogs=await blog.findById(blogid) // finding particular blog
-    const flag=blogs.likedby.includes(userid)
-    // console.log(flag);
-    if(!flag)
-    {
-        blogs.likedby.push(userid) 
-        const flag1=blogs.unlikedby.includes(userid)
-        if(flag1)
-        {
-            blogs.liked+=2;
-            const arr=[]
-            for(let i=0;i<blogs.unlikedby.length;i++)
-            {
-                if(blogs.unlikedby[i].toString()!==userid)
-                    arr.push(blogs.unlikedby[i]);
-            }
-            blogs.unlikedby=arr
-        }
-        else
-        {
-            blogs.liked+=1;
-        }
-        
-    }
-    await blogs.save()
-    res.status(200).send(blogs)   
-    } catch (error) {
-        res.send(error.message)
-    }
-}
-const downvote=async(req,res)=>
-{
-    
-    const userid=req.params.id1// user id in blog to check it is present in like or unlike
-    const blogid=req.params.id; //blog id 
-    try 
-    {
-    let blogs=await blog.findById(blogid) // finding particular blog
-    const flag=blogs.unlikedby.includes(userid)
-    // console.log(flag);
-    if(!flag)
-    {
-        blogs.unlikedby.push(userid) 
-        const flag1=blogs.likedby.includes(userid)
-        // console.log(flag1);
-        // console.log(blogs.unlikedby);
-        if(flag1)
-        {
-            blogs.liked-=2;
-            const arr=[]
-            for(let i=0;i<blogs.likedby.length;i++)
-            {
-                if(blogs.likedby[i].toString()!=userid)
-                    arr.push(blogs.likedby[i]);
-            }
-            blogs.likedby=arr
-            // await blog.findByIdAndUpdate(blogid, { $pull: { 
-            //     likedby:userid 
-            // } },{ new: true })
-        }
-        else
-        {
-            blogs.liked-=1;
-        }
-    }
-    await blogs.save()
-    res.status(200).send(blogs)   
-    } catch (error) {
-        res.send(error.message)
+        await blogs.save();
+        await users.save();
+        res.status(201).send(blogs);
+    } catch(e) {
+        res.status(400).send(e);
     }
 }
 module.exports={
-    getBlog,addBlog,getbyId,getByUserId,updateBlog,deleteBlog,upvote,downvote
+    getBlog,addBlog,getbyId,getByUserId,updateBlog,deleteBlog,like,
 }

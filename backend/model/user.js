@@ -17,6 +17,11 @@ const UserSchema=mongoose.Schema({
         minlength:8,
         require:true
     },
+    likedBy:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'blog',// connecting both models
+        required:true  
+    }],
     blogs:[{ // particular user blogs list 1 per time
         type:mongoose.Schema.Types.ObjectId,
         ref:'blog',// connecting both models

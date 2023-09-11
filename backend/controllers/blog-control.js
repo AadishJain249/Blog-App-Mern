@@ -1,6 +1,6 @@
 const user = require("../model/user");
 const blog=require("../model/blog");
-const getBlog=async(req,res,next)=>{
+const getBlog=async(req,res)=>{
     let blogs;
     try {
         blogs=await blog.find().populate('author')
@@ -14,7 +14,7 @@ const getBlog=async(req,res,next)=>{
     }
     return res.status(200).json({blogs});
 }
-const addBlog=async(req,res,next)=>{
+const addBlog=async(req,res)=>{
     const {title,desc,image,liked,author}=req.body
     let exist;
     try
@@ -49,7 +49,7 @@ const addBlog=async(req,res,next)=>{
     }
     return res.status(200).send({})
 }
-const updateBlog=async(req,res,next)=>{
+const updateBlog=async(req,res)=>{
     const {title,desc}=req.body
     const blogid=req.params.id
     // console.log(req.body);
@@ -68,7 +68,7 @@ const updateBlog=async(req,res,next)=>{
     }
     return res.status(200).json({blogs})
 }
-const getbyId=async(req,res,next)=>{
+const getbyId=async(req,res)=>{
     const id=req.params.id
     let blogs
     try {
@@ -79,7 +79,7 @@ const getbyId=async(req,res,next)=>{
     // console.log(blogs);
     return res.status(200).json({blogs})
 }
-const getByUserId=async(req,res,next)=>{
+const getByUserId=async(req,res)=>{
     const userid=req.params.id;
     let userblogs;
     try {
@@ -94,8 +94,9 @@ const getByUserId=async(req,res,next)=>{
     // console.log(userblogs);
     return res.status(200).json({userblogs});
 }
-const deleteBlog=async(req,res,next)=>
+const deleteBlog=async(req,res)=>
 {
+    console.log("sdffsd");
     var id=req.params.id; //blog id
     let b
     try 
@@ -117,7 +118,7 @@ const deleteBlog=async(req,res,next)=>
         console.log(error);
     }
 }
-const upvote=async(req,res,next)=>
+const upvote=async(req,res)=>
 {
     const userid=req.params.id1// user id in blog to check it is present in like or unlike
     const blogid=req.params.id; // blog id 
@@ -153,7 +154,7 @@ const upvote=async(req,res,next)=>
         res.send(error.message)
     }
 }
-const downvote=async(req,res,next)=>
+const downvote=async(req,res)=>
 {
     
     const userid=req.params.id1// user id in blog to check it is present in like or unlike

@@ -83,7 +83,7 @@ const login=async(req,res,next)=>{
     {
         return res.status(400).json({message: "wrong password"})
     }
-    const token=jwt.sign({id:exist._id},secret,{
+    const token=jwt.sign({id:exist._id},"Aad",{
         expiresIn:"29days"
     })
     return res.status(200).json({

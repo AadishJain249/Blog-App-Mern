@@ -23,8 +23,9 @@ import {
   TwitterShareButton
 } from 'react-share';
 import axios from "axios";
-function Blog({title,desc,image,author,id,isUser,liked}) {
+function Blog({title,desc,image,author,id,isUser}) {
   const Navigate=useNavigate()
+  console.log(id);
   const isLogged=useSelector((state)=>state.isLoggedIn)
   const current = new Date();
   const [count,setcount]=useState()
@@ -34,6 +35,7 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
   }
   const navigate=useNavigate()
   const {token}=useSelector((state)=>state.auth)
+  console.log(token);
   const deleteRequest=async()=>{
     const res = await axios
     .delete(`http://blogappmern.onrender.com/api/blog/delete/${id}`,
@@ -48,9 +50,12 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
   }
   const increment=async()=>{
     const id1 = localStorage.getItem("userId");
+    // console.log(id1+" "+"aadish");
     const res=await axios.put(`http://blogappmern.onrender.com/api/blog/likes/${id1}/${id}`,
     {
-      headers: {Authorization: `Bearer ${token}`},
+      headers: {
+        Authorization: `Bearer ${token}`,
+    },
     })
     .catch((err) => console.log(err));
     const data = await res.data;
@@ -74,8 +79,7 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
   
   const handleDelete=()=>{
     deleteRequest()
-    .then(() => navigate("/"))
-    .then(() => navigate("/blog"));
+    .then(() => navigate("/myblogs"))
   }
   return (
     <Card
@@ -91,7 +95,7 @@ function Blog({title,desc,image,author,id,isUser,liked}) {
           },
         }}
       >
-     {!isUser && (<Box display="flex">
+     {isUser && (<Box display="flex">
             <IconButton onClick={handleEdit} sx={{ marginLeft: "auto" }}>
               <ModeEditOutlineIcon color="warning" />
             </IconButton>

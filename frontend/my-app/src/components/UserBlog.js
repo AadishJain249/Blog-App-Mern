@@ -32,7 +32,7 @@ function UserBlog() {
           <Blog
             id={blog._id}
             key={index}
-            // isUser={true}
+            isUser={true}
             title={blog.title}
             desc={blog.desc}
             image={blog.image}
